@@ -1,32 +1,176 @@
-// function main(){
-//     gsap.registerPlugin(ScrollTrigger);
+function homePageAnimation(){
+    gsap.set(".slidesm", {scale: 5})
+    
+var tl = gsap.timeline({
+scrollTrigger:{
+        trigger: ".home",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.2,
+    }
+})
 
-// // Using Locomotive Scroll from Locomotive https://github.com/locomotivemtl/locomotive-scroll
+tl.to(".vdo_div",{
+    '--clip': "0%",
+    ease: Power2,
+}, 'a')
+tl.to(".slidesm", {
+    scale: 1,
+    ease: Power2,
+}, 'a')
 
-// const locoScroll = new LocomotiveScroll({
-//   el: document.querySelector(".main"),
-//   smooth: true
-// });
-// // each time Locomotive Scroll updates, tell ScrollTrigger to update too (sync positioning)
-// locoScroll.on("scroll", ScrollTrigger.update);
+tl.to(".rgt", {
+    xPercent: 10,
+    scrub: 0.2,
+    ease: Power2,
+}, 'b')
+tl.to(".lft", { 
+    xPercent: -10,
+    scrub: 0.2,
+    ease: Power2,
+}, 'b')
+}
 
-// // tell ScrollTrigger to use these proxy methods for the ".main" element since Locomotive Scroll is hijacking things
-// ScrollTrigger.scrollerProxy(".main", {
-//   scrollTop(value) {
-//     return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
-//   }, // we don't have to define a scrollLeft because we're only scrolling vertically.
-//   getBoundingClientRect() {
-//     return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
-//   },
-//   // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
-//   pinType: document.querySelector(".main").style.transform ? "transform" : "fixed"
-// });
+gsap.to(".thirtyFive", {
+    width: "35.5vw",
+    backgroundColor: "black",
+    color: "#AEDEE0",
+    ease: Power3,
+    stagger: 0.3,
+    scrollTrigger: {
+        trigger: ".thirtyFive",
+        scroller: "body",
+        start: "top 80%",
+        end: "top -55%",
+        scrub: true,
+    }
+})
+
+gsap.to(".slide", {
+    scrollTrigger:{
+        trigger: ".real",
+        scroller: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+    },
+    xPercent: -337,
+    ease: Power4,
+})
+
+function options(){
+    var line = document.querySelectorAll(".line_filler");
+
+line.forEach(function(elem){
+    elem.addEventListener("mousemove", function(dets){
+    gsap.to(this.querySelector(".picture"),{
+        opacity: 1,
+        x: gsap.utils.mapRange(0, window.innerWidth, -100, 100, dets.clientX),
+        y: gsap.utils.mapRange(0, window.innerHeight, -100, 100, dets.clientY),
+        ease: Power3,
+        duration: 0.4,
+    })
+    })
+    elem.addEventListener("mouseleave", function(dets){
+    //     elem.childNodes[5].style.transition = 'all ease 0.5s';
+    //     elem.childNodes[5].style.opacity = 0;/
+    gsap.to(this.querySelector(".picture"),{
+        opacity: 0,
+        ease: Power3,
+        duration: 0.4,
+    })
+    })
+})
+}
+
+function loco(){
+    (function () {
+        const locomotiveScroll = new LocomotiveScroll();
+    })();
+}
+
+function reviewAnimation(){
+    var para1 =  document.querySelectorAll(".paraOne h1");
+
+para1.forEach(function(elem){
+
+    var clutter = "";
+
+    var alloneh1 = elem.textContent;
+    var splitted1h1 = alloneh1.split("");
+
+    splitted1h1.forEach(function(el){
+        clutter += `<span>${el}</span>`;
+    })
+    elem.innerHTML = clutter;
+})
+
+gsap.to(".paraOne h1 span", {
+    color: "#2544EE",
+    stagger: 0.2,
+    scrollTrigger:{
+        trigger: ".review",
+        scroller: "body",
+        start: "top 98%",
+        end: "top -23.5%",
+        scrub: 0.2,
+    }
+})
+
+var para2 = document.querySelectorAll(".paraTwo h1");
+
+para2.forEach(function(elem){
+
+    var clutter = "";
+
+    var alltwoh1 = elem.textContent;
+    var splitted2h1 = alltwoh1.split("");
+
+    splitted2h1.forEach(function(el){
+    clutter += `<span>${el}</span>`;
+    })
+    elem.innerHTML = clutter;
+})
+
+gsap.to(".paraTwo h1 span",{
+    color: "#8566A7",
+    stagger: 0.2,
+    scrollTrigger: {
+        trigger: ".paraTwo",
+        scroller: "body",
+        start: "top 98%",
+        end: "top -36%",
+        scrub: 0.2,
+    }
+})
+}
+
+gsap.to(".svg_img",{
+    rotation: 360,
+    duration: 35,
+    repeat: -1, 
+    ease: "power3",
+})
+
+gsap.from(".significo span",{
+    y: 400,
+    ease: Power2,
+    stagger: 0.1,
+    scrollTrigger: {
+        trigger: ".lowerFooter",
+        scroller: "body",
+        start: "top 25%",
+        end: "top 10%",
+        // markers: true,
+        scrub: 2,
+    }
+})
 
 
-// // each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
-// ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
 
-// // after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
-// ScrollTrigger.refresh();
-// }
-// main();
+
+
+loco();
+homePageAnimation();
+options();
+reviewAnimation();
