@@ -21,6 +21,6 @@ body[theme="orange"] .section{
     color: #000;
 }
 
-.video_div{
+.vdo_div{
     clip-path: circle(var(--clip) at 50% 50%);
 }
